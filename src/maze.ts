@@ -67,6 +67,8 @@ class Grid {
   }
 }
 
+export default Grid;
+
 const grid = new Grid(20, 20)
 
 for (let x = 0; x < grid.width; x++) {
