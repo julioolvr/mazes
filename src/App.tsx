@@ -11,15 +11,21 @@ const App: React.FC = () => {
   const mazeRef = useRef(initialMaze);
   const [generatedAt, setGeneratedAt] = useState(new Date());
 
-  function regenerateMaze() {
+  function generateBinaryTree() {
     mazeRef.current.generateBinaryTree();
+    setGeneratedAt(new Date());
+  }
+
+  function generateSidewinder() {
+    mazeRef.current.generateSidewinder();
     setGeneratedAt(new Date());
   }
 
   return (
     <div>
       <Maze key={generatedAt.toISOString()} grid={mazeRef.current} />
-      <button onClick={regenerateMaze}>Regenerate</button>
+      <button onClick={generateBinaryTree}>Regenerate w/ Binary Tree</button>
+      <button onClick={generateSidewinder}>Regenerate w/ Sidewinder</button>
     </div>
   );
 }
