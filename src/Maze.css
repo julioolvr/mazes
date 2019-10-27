@@ -1,0 +1,10 @@
+table {
+  background-color: var(--maze-background-color);
+  border-collapse: collapse;
+}
+
+td {
+  border: 2px solid var(--maze-wall-color);
+  width: 20px;
+  height: 20px;
+}

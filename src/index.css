@@ -1,0 +1,9 @@
+:root {
+  --background-color: #1F2632;
+  --maze-background-color: #454D5B;
+  --maze-wall-color: #B5B09C;
+}
+
+body {
+  background-color: var(--background-color);
+}
