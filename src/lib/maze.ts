@@ -66,7 +66,9 @@ class Grid {
     return cell;
   }
 
-  generate() {
+  generateBinaryTree() {
+    this.clearConnections();
+
     for (let x = 0; x < this.width; x++) {
       for (let y = 0; y < this.height; y++) {
         if (x === this.width - 1 && y === this.height - 1) {
@@ -90,6 +92,10 @@ class Grid {
         }
       }
     }
+  }
+
+  clearConnections() {
+    this.connections = [];
   }
 }
 

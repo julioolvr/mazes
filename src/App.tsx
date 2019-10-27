@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 
 import Maze from 'Maze';
@@ -6,19 +6,19 @@ import Grid from 'lib/maze';
 
 const App: React.FC = () => {
   const initialMaze = new Grid(20, 20);
-  initialMaze.generate();
+  initialMaze.generateBinaryTree();
 
-  const [maze, setMaze] = useState(initialMaze);
+  const mazeRef = useRef(initialMaze);
+  const [generatedAt, setGeneratedAt] = useState(new Date());
 
   function regenerateMaze() {
-    const maze = new Grid(20, 20);
-    maze.generate();
-    setMaze(maze);
+    mazeRef.current.generateBinaryTree();
+    setGeneratedAt(new Date());
   }
 
   return (
     <div>
-      <Maze grid={maze} />
+      <Maze key={generatedAt.toISOString()} grid={mazeRef.current} />
       <button onClick={regenerateMaze}>Regenerate</button>
     </div>
   );
