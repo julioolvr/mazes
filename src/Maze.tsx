@@ -1,11 +1,51 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import Grid from "lib/maze";
 import times from "utils/times";
+import dijkstra, { distanceAt } from "lib/solvers/dijkstra";
 
 import "./Maze.css";
 
 function Maze({ grid }: Props) {
+  const start = { x: grid.height - 1, y: grid.width - 1 };
+  const end = { x: 0, y: 0 };
+
+  const solution = useMemo(() => dijkstra(grid, start), [grid, start]);
+  const distanceAtCoordinates = distanceAt(solution);
+  const solutionPath = useMemo(() => {
+    const path = [end];
+    let current = end;
+    let distance = distanceAtCoordinates(end);
+
+    while (distance > 0) {
+      const neighbors = grid.neighbors(current);
+      const nextNeighbor = Array.from(neighbors).find(
+        cell => distanceAtCoordinates(cell.coordinates) < distance
+      );
+      const nextCoordinates = nextNeighbor!.coordinates;
+      path.push(nextCoordinates);
+      distance = distanceAtCoordinates(nextCoordinates);
+      current = nextCoordinates;
+    }
+
+    return path;
+  }, [distanceAtCoordinates, end, grid]);
+
+  const maxDistance = useMemo(() => {
+    let maxDistance = 0;
+
+    for (let x = 0; x < grid.width; x++) {
+      for (let y = 0; y < grid.height; y++) {
+        const distance = distanceAtCoordinates({ x, y });
+        if (distance > maxDistance) {
+          maxDistance = distance;
+        }
+      }
+    }
+
+    return maxDistance;
+  }, [grid, distanceAtCoordinates]);
+
   return (
     <table>
       <tbody>
@@ -20,6 +60,7 @@ function Maze({ grid }: Props) {
                   borderRight?: string;
                   borderTop?: string;
                   borderBottom?: string;
+                  backgroundColor?: string;
                 } = {};
 
                 if (grid.hasConnection({ x, y }, { x: x - 1, y })) {
@@ -36,6 +77,19 @@ function Maze({ grid }: Props) {
 
                 if (grid.hasConnection({ x, y }, { x, y: y + 1 })) {
                   style.borderTop = "none";
+                }
+
+                if (
+                  solutionPath.some(
+                    coordinates => x === coordinates.x && y === coordinates.y
+                  )
+                ) {
+                  style.backgroundColor = `hsl(10, ${(distanceAtCoordinates({
+                    x,
+                    y
+                  }) /
+                    maxDistance) *
+                    100}%, 50%)`;
                 }
 
                 return <td key={x} style={style}></td>;

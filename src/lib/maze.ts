@@ -1,4 +1,4 @@
-type GridCoordinates = { x: number; y: number };
+export type GridCoordinates = { x: number; y: number };
 
 class Cell {
   coordinates: GridCoordinates;
@@ -22,6 +22,13 @@ class Connection {
   constructor(from: Cell, to: Cell) {
     this.from = from;
     this.to = to;
+  }
+
+  includesCoordinates(coordinates: GridCoordinates): boolean {
+    return (
+      this.from.hasCoordinates(coordinates) ||
+      this.to.hasCoordinates(coordinates)
+    );
   }
 
   matches(from: GridCoordinates, to: GridCoordinates): boolean {
@@ -75,6 +82,14 @@ class Grid {
 
   clearConnections() {
     this.connections = [];
+  }
+
+  neighbors(coordinates: GridCoordinates): Set<Cell> {
+    const cells = this.connections
+      .filter(connection => connection.includesCoordinates(coordinates))
+      .flatMap(connection => [connection.from, connection.to]);
+
+    return new Set(cells);
   }
 }
 
