@@ -30,21 +30,7 @@ function Maze({ grid }: Props) {
 
     return path;
   }, [distanceAtCoordinates, end, grid]);
-
-  const maxDistance = useMemo(() => {
-    let maxDistance = 0;
-
-    for (let x = 0; x < grid.width; x++) {
-      for (let y = 0; y < grid.height; y++) {
-        const distance = distanceAtCoordinates({ x, y });
-        if (distance > maxDistance) {
-          maxDistance = distance;
-        }
-      }
-    }
-
-    return maxDistance;
-  }, [grid, distanceAtCoordinates]);
+  const maxDistance = distanceAtCoordinates(solutionPath[0]);
 
   return (
     <table>
