@@ -1,4 +1,4 @@
-type GridCoordinates = { x: number, y: number };
+type GridCoordinates = { x: number; y: number };
 
 class Cell {
   coordinates: GridCoordinates;
@@ -8,7 +8,10 @@ class Cell {
   }
 
   hasCoordinates(coordinates: GridCoordinates) {
-    return this.coordinates.x === coordinates.x && this.coordinates.y === coordinates.y;
+    return (
+      this.coordinates.x === coordinates.x &&
+      this.coordinates.y === coordinates.y
+    );
   }
 }
 
@@ -22,8 +25,10 @@ class Connection {
   }
 
   matches(from: GridCoordinates, to: GridCoordinates): boolean {
-    return (this.from.hasCoordinates(from) && this.to.hasCoordinates(to))
-      || (this.from.hasCoordinates(to) && this.to.hasCoordinates(from));
+    return (
+      (this.from.hasCoordinates(from) && this.to.hasCoordinates(to)) ||
+      (this.from.hasCoordinates(to) && this.to.hasCoordinates(from))
+    );
   }
 }
 
@@ -60,7 +65,9 @@ class Grid {
     const cell = this.cells[coordinates.y * this.width + coordinates.x];
 
     if (!cell) {
-      throw new Error(`Couldn't find cell at x: ${coordinates.x}, y: ${coordinates.y}`);
+      throw new Error(
+        `Couldn't find cell at x: ${coordinates.x}, y: ${coordinates.y}`
+      );
     }
 
     return cell;

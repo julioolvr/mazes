@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react';
-import './App.css';
+import React, { useState, useRef } from "react";
+import "./App.css";
 
-import Maze from 'Maze';
-import Grid from 'lib/maze';
-import { binaryTree, sidewinder } from 'lib/generators'
+import Maze from "Maze";
+import Grid from "lib/maze";
+import { binaryTree, sidewinder } from "lib/generators";
 
 const App: React.FC = () => {
   const maze = new Grid(20, 20);
@@ -29,6 +29,6 @@ const App: React.FC = () => {
       <button onClick={generateSidewinder}>Regenerate w/ Sidewinder</button>
     </div>
   );
-}
+};
 
 export default App;

@@ -1,4 +1,4 @@
-import Grid from 'lib/maze';
+import Grid from "lib/maze";
 
 function sidewinder(grid: Grid) {
   grid.clearConnections();
