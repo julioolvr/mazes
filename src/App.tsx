@@ -3,21 +3,22 @@ import './App.css';
 
 import Maze from 'Maze';
 import Grid from 'lib/maze';
+import { binaryTree, sidewinder } from 'lib/generators'
 
 const App: React.FC = () => {
-  const initialMaze = new Grid(20, 20);
-  initialMaze.generateBinaryTree();
+  const maze = new Grid(20, 20);
+  binaryTree(maze);
 
-  const mazeRef = useRef(initialMaze);
+  const mazeRef = useRef(maze);
   const [generatedAt, setGeneratedAt] = useState(new Date());
 
   function generateBinaryTree() {
-    mazeRef.current.generateBinaryTree();
+    binaryTree(mazeRef.current);
     setGeneratedAt(new Date());
   }
 
   function generateSidewinder() {
-    mazeRef.current.generateSidewinder();
+    sidewinder(mazeRef.current);
     setGeneratedAt(new Date());
   }
 

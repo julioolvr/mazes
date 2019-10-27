@@ -66,64 +66,6 @@ class Grid {
     return cell;
   }
 
-  generateBinaryTree() {
-    this.clearConnections();
-
-    for (let x = 0; x < this.width; x++) {
-      for (let y = 0; y < this.height; y++) {
-        if (x === this.width - 1 && y === this.height - 1) {
-          break;
-        }
-
-        if (x === this.width - 1) {
-          this.connect({ x, y }, { x, y: y + 1 });
-          continue;
-        }
-
-        if (y === this.height - 1) {
-          this.connect({ x, y }, { x: x + 1, y });
-          continue;
-        }
-
-        if (Math.random() >= 0.5) {
-          this.connect({ x, y }, { x, y: y + 1 });
-        } else {
-          this.connect({ x, y }, { x: x + 1, y });
-        }
-      }
-    }
-  }
-
-  generateSidewinder() {
-    this.clearConnections();
-
-    for (let y = 0; y < this.height; y++) {
-      let run = [];
-
-      for (let x = 0; x < this.width; x++) {
-        if (x === this.width - 1 && y === this.height - 1) {
-          break;
-        }
-
-        if (y === this.height - 1) {
-          this.connect({ x, y }, { x: x + 1, y });
-          continue;
-        }
-
-        run.push({ x, y });
-
-        if (x < this.width - 1 && Math.random() >= 0.5) {
-          this.connect({ x, y }, { x: x + 1, y });
-          continue;
-        }
-
-        const randomInRun = run[Math.floor(Math.random() * run.length)];
-        this.connect(randomInRun, { x: randomInRun.x, y: randomInRun.y + 1 });
-        run = [];
-      }
-    }
-  }
-
   clearConnections() {
     this.connections = [];
   }
