@@ -1,9 +1,13 @@
 :root {
+  --color: #d9d7c2;
   --background-color: #1f2632;
   --maze-background-color: #454d5b;
   --maze-wall-color: #b5b09c;
+  --font-family: sans-serif;
 }
 
 body {
+  color: var(--color);
   background-color: var(--background-color);
+  font-family: var(--font-family);
 }
