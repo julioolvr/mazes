@@ -4,6 +4,8 @@
   --maze-background-color: #454d5b;
   --maze-wall-color: #b5b09c;
   --font-family: sans-serif;
+  --active: #323d51;
+  --accent: #ffa400;
 }
 
 body {

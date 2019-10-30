@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import "./App.css";
 
 import Maze from "Maze";
+import Button from "ui/Button";
 import Grid from "lib/maze";
 import { binaryTree, sidewinder } from "lib/generators";
 
@@ -28,17 +29,13 @@ const App: React.FC = () => {
     <div>
       Generators:
       {algorithms.map((algorithm, i) => (
-        <label key={algorithm.name}>
-          <input
-            type="radio"
-            name="algorithm"
-            value={i}
-            checked={algorithmIndex === i}
-            onChange={e => setAlgorithmIndex(Number(e.target.value))}
-          />
-
+        <Button
+          key={algorithm.name}
+          onClick={() => setAlgorithmIndex(i)}
+          selected={algorithmIndex === i}
+        >
           {algorithm.name}
-        </label>
+        </Button>
       ))}
       <button onClick={regenerate}>Regenerate</button>
       <Maze key={generatedAt.toISOString()} grid={mazeRef.current} />
