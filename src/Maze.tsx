@@ -18,7 +18,7 @@ function Maze({ grid }: Props) {
     let distance = distanceAtCoordinates(end);
 
     while (distance > 0) {
-      const neighbors = grid.neighbors(current);
+      const neighbors = grid.connected(current);
       const nextNeighbor = Array.from(neighbors).find(
         cell => distanceAtCoordinates(cell.coordinates) < distance
       );

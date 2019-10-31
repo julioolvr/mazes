@@ -1,7 +1,7 @@
 import Grid from "lib/maze";
 
 function binaryTree(grid: Grid) {
-  grid.clearConnections();
+  grid.clear();
 
   for (let x = 0; x < grid.width; x++) {
     for (let y = 0; y < grid.height; y++) {

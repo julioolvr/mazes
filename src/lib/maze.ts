@@ -1,10 +1,14 @@
+import sample from "utils/sample";
+
 export type GridCoordinates = { x: number; y: number };
 
 class Cell {
   coordinates: GridCoordinates;
+  visited: boolean;
 
   constructor(x: number, y: number) {
     this.coordinates = { x, y };
+    this.visited = false;
   }
 
   hasCoordinates(coordinates: GridCoordinates) {
@@ -12,6 +16,18 @@ class Cell {
       this.coordinates.x === coordinates.x &&
       this.coordinates.y === coordinates.y
     );
+  }
+
+  visit() {
+    this.visited = true;
+  }
+
+  isVisited() {
+    return this.visited;
+  }
+
+  clear() {
+    this.visited = false;
   }
 }
 
@@ -80,16 +96,61 @@ class Grid {
     return cell;
   }
 
-  clearConnections() {
+  clear() {
     this.connections = [];
+    this.cells.forEach(cell => cell.clear());
   }
 
-  neighbors(coordinates: GridCoordinates): Set<Cell> {
+  neighbors(cell: Cell): Set<Cell> {
+    const neighbors = new Set<Cell>();
+
+    if (cell.coordinates.x > 0) {
+      neighbors.add(
+        this.cellAt({ x: cell.coordinates.x - 1, y: cell.coordinates.y })
+      );
+    }
+
+    if (cell.coordinates.x < this.width - 1) {
+      neighbors.add(
+        this.cellAt({ x: cell.coordinates.x + 1, y: cell.coordinates.y })
+      );
+    }
+
+    if (cell.coordinates.y > 0) {
+      neighbors.add(
+        this.cellAt({ x: cell.coordinates.x, y: cell.coordinates.y - 1 })
+      );
+    }
+
+    if (cell.coordinates.y < this.height - 1) {
+      neighbors.add(
+        this.cellAt({ x: cell.coordinates.x, y: cell.coordinates.y + 1 })
+      );
+    }
+
+    return neighbors;
+  }
+
+  connected(coordinates: GridCoordinates): Set<Cell> {
     const cells = this.connections
       .filter(connection => connection.includesCoordinates(coordinates))
       .flatMap(connection => [connection.from, connection.to]);
 
     return new Set(cells);
+  }
+
+  randomCell(): Cell {
+    return sample(this.cells);
+  }
+
+  getSize(): number {
+    return this.width * this.height;
+  }
+
+  allVisited(): boolean {
+    return (
+      this.cells.filter(cell => cell.isVisited()).length === this.getSize()
+    );
   }
 }
 

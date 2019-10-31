@@ -13,7 +13,7 @@ function dijkstra(grid: Grid, startPoint: GridCoordinates): DijkstraSolution {
     const newFrontier: Array<GridCoordinates> = [];
 
     frontier.forEach(coordinates => {
-      grid.neighbors(coordinates).forEach(cell => {
+      grid.connected(coordinates).forEach(cell => {
         const index = coordinateToIndex(grid.width, cell.coordinates);
 
         if (distances[index] === undefined) {

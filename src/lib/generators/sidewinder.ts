@@ -1,7 +1,7 @@
 import Grid from "lib/maze";
 
 function sidewinder(grid: Grid) {
-  grid.clearConnections();
+  grid.clear();
 
   for (let y = 0; y < grid.height; y++) {
     let run = [];
