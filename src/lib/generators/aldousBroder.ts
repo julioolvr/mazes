@@ -8,7 +8,7 @@ function aldousBroder(grid: Grid) {
   current.visit();
 
   while (!grid.allVisited()) {
-    const next = sample(Array.from(grid.neighbors(current)));
+    const next = sample(grid.neighbors(current));
 
     if (!next.isVisited()) {
       grid.connect(current.coordinates, next.coordinates);
