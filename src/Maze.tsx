@@ -6,12 +6,11 @@ import dijkstra from "lib/solvers/dijkstra";
 
 import "./Maze.css";
 
-function Maze({ grid, startPoint, endPoint }: Props) {
-  const solution = useMemo(() => dijkstra(grid, startPoint, endPoint), [
-    grid,
-    startPoint,
-    endPoint
-  ]);
+function Maze({ grid, startPoint, endPoint, showSolution = true }: Props) {
+  const solution = useMemo(
+    () => (showSolution ? dijkstra(grid, startPoint, endPoint) : []),
+    [grid, startPoint, endPoint, showSolution]
+  );
   const maxDistance = solution.length;
 
   return (
@@ -48,6 +47,7 @@ function Maze({ grid, startPoint, endPoint }: Props) {
                 }
 
                 if (
+                  showSolution &&
                   solution.some(
                     coordinates => x === coordinates.x && y === coordinates.y
                   )
@@ -73,6 +73,7 @@ type Props = {
   grid: Grid;
   startPoint: GridCoordinates;
   endPoint: GridCoordinates;
+  showSolution?: boolean;
 };
 
 export default Maze;
