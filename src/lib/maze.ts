@@ -152,6 +152,10 @@ class Grid {
       this.cells.filter(cell => cell.isVisited()).length === this.getSize()
     );
   }
+
+  notVisited(): Set<Cell> {
+    return new Set(this.cells.filter(cell => !cell.isVisited()));
+  }
 }
 
 export default Grid;

@@ -6,12 +6,13 @@ import FormGroup from "ui/FormGroup";
 import ButtonGroup from "ui/ButtonGroup";
 import Button from "ui/Button";
 import Grid from "lib/maze";
-import { binaryTree, sidewinder, aldousBroder } from "lib/generators";
+import { binaryTree, sidewinder, aldousBroder, wilson } from "lib/generators";
 
 const algorithms = [
   { name: "Binary Tree", algo: binaryTree },
   { name: "Sidewinder", algo: sidewinder },
-  { name: "Aldous-Broder", algo: aldousBroder }
+  { name: "Aldous-Broder", algo: aldousBroder },
+  { name: "Wilson", algo: wilson }
 ];
 
 const App: React.FC = () => {
