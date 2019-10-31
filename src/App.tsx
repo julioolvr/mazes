@@ -21,12 +21,12 @@ const App: React.FC = () => {
   const mazeRef = useRef(maze);
   const [generatedAt, setGeneratedAt] = useState(new Date());
 
-  const regenerate = useCallback(() => {
+  const generate = useCallback(() => {
     algorithms[algorithmIndex].algo(mazeRef.current);
     setGeneratedAt(new Date());
   }, [algorithmIndex]);
 
-  useEffect(() => regenerate(), []);
+  useEffect(() => generate(), []);
 
   return (
     <div>
@@ -45,8 +45,8 @@ const App: React.FC = () => {
       </FormGroup>
 
       <div>
-        <Button fullWidth onClick={regenerate}>
-          Regenerate
+        <Button fullWidth onClick={generate}>
+          Generate
         </Button>
       </div>
 
