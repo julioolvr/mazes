@@ -18,6 +18,7 @@ const algorithms = [
 const App: React.FC = () => {
   const maze = new Grid(20, 20);
   const [algorithmIndex, setAlgorithmIndex] = useState(0);
+  const [showSolution, setShowSolution] = useState(true);
 
   const mazeRef = useRef(maze);
   const [generatedAt, setGeneratedAt] = useState(new Date());
@@ -59,7 +60,23 @@ const App: React.FC = () => {
           x: mazeRef.current.width - 1,
           y: mazeRef.current.height - 1
         }}
+        showSolution={showSolution}
       />
+
+      <FormGroup title="Show solution">
+        <ButtonGroup>
+          <Button
+            onClick={() => setShowSolution(false)}
+            selected={!showSolution}
+          >
+            No
+          </Button>
+
+          <Button onClick={() => setShowSolution(true)} selected={showSolution}>
+            Yes
+          </Button>
+        </ButtonGroup>
+      </FormGroup>
     </div>
   );
 };
