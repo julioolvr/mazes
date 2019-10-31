@@ -1,5 +1,6 @@
 :root {
   --color: #d9d7c2;
+  --color-light: rgba(217, 215, 194, 0.5);
   --background-color: #1f2632;
   --maze-background-color: #454d5b;
   --maze-wall-color: #b5b09c;
@@ -12,4 +13,7 @@ body {
   color: var(--color);
   background-color: var(--background-color);
   font-family: var(--font-family);
+
+  display: flex;
+  justify-content: center;
 }

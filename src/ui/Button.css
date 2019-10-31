@@ -5,13 +5,14 @@
   background-color: transparent;
   color: var(--color);
   border-color: var(--color);
-}
-
-.btn + .btn {
-  margin-left: 1em;
+  cursor: pointer;
 }
 
 .btn--selected {
   background-color: var(--active);
   border-color: var(--accent);
+}
+
+.btn--full-width {
+  width: 100%;
 }

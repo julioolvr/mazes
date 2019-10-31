@@ -1,0 +1,10 @@
+.form-group {
+  border: 1px solid var(--color-light);
+  border-radius: 4px;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+.form-group__title {
+  margin-bottom: 0.5em;
+}

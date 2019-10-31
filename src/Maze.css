@@ -1,6 +1,7 @@
 table {
   background-color: var(--maze-background-color);
   border-collapse: collapse;
+  margin-top: 1em;
 }
 
 td {

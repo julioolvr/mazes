@@ -2,6 +2,8 @@ import React, { useState, useRef } from "react";
 import "./App.css";
 
 import Maze from "Maze";
+import FormGroup from "ui/FormGroup";
+import ButtonGroup from "ui/ButtonGroup";
 import Button from "ui/Button";
 import Grid from "lib/maze";
 import { binaryTree, sidewinder } from "lib/generators";
@@ -27,17 +29,26 @@ const App: React.FC = () => {
 
   return (
     <div>
-      Generators:
-      {algorithms.map((algorithm, i) => (
-        <Button
-          key={algorithm.name}
-          onClick={() => setAlgorithmIndex(i)}
-          selected={algorithmIndex === i}
-        >
-          {algorithm.name}
+      <FormGroup title="Generators">
+        <ButtonGroup>
+          {algorithms.map((algorithm, i) => (
+            <Button
+              key={algorithm.name}
+              onClick={() => setAlgorithmIndex(i)}
+              selected={algorithmIndex === i}
+            >
+              {algorithm.name}
+            </Button>
+          ))}
+        </ButtonGroup>
+      </FormGroup>
+
+      <div>
+        <Button fullWidth onClick={regenerate}>
+          Regenerate
         </Button>
-      ))}
-      <button onClick={regenerate}>Regenerate</button>
+      </div>
+
       <Maze key={generatedAt.toISOString()} grid={mazeRef.current} />
     </div>
   );
