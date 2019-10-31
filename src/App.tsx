@@ -51,7 +51,15 @@ const App: React.FC = () => {
         </Button>
       </div>
 
-      <Maze key={generatedAt.toISOString()} grid={mazeRef.current} />
+      <Maze
+        key={generatedAt.toISOString()}
+        grid={mazeRef.current}
+        startPoint={{ x: 0, y: 0 }}
+        endPoint={{
+          x: mazeRef.current.width - 1,
+          y: mazeRef.current.height - 1
+        }}
+      />
     </div>
   );
 };

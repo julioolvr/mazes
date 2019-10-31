@@ -1,19 +1,16 @@
 import React, { useMemo } from "react";
 
-import Grid from "lib/maze";
+import Grid, { GridCoordinates } from "lib/maze";
 import times from "utils/times";
 import dijkstra from "lib/solvers/dijkstra";
 
 import "./Maze.css";
 
-function Maze({ grid }: Props) {
-  const start = { x: grid.height - 1, y: grid.width - 1 };
-  const end = { x: 0, y: 0 };
-
-  const solution = useMemo(() => dijkstra(grid, start, end), [
+function Maze({ grid, startPoint, endPoint }: Props) {
+  const solution = useMemo(() => dijkstra(grid, startPoint, endPoint), [
     grid,
-    start,
-    end
+    startPoint,
+    endPoint
   ]);
   const maxDistance = solution.length;
 
@@ -74,6 +71,8 @@ function Maze({ grid }: Props) {
 
 type Props = {
   grid: Grid;
+  startPoint: GridCoordinates;
+  endPoint: GridCoordinates;
 };
 
 export default Maze;
