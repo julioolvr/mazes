@@ -1,7 +1,7 @@
 import sample from "utils/sample";
 import Grid from "lib/maze";
 
-function huntAndKill(grid: Grid) {
+function recursiveBacktracker(grid: Grid) {
   grid.clear();
 
   const start = grid.randomCell();
@@ -25,4 +25,4 @@ function huntAndKill(grid: Grid) {
   }
 }
 
-export default huntAndKill;
+export default recursiveBacktracker;
