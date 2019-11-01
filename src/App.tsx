@@ -11,7 +11,8 @@ import {
   sidewinder,
   aldousBroder,
   wilson,
-  huntAndKill
+  huntAndKill,
+  recursiveBacktracker
 } from "lib/generators";
 
 const algorithms = [
@@ -19,7 +20,8 @@ const algorithms = [
   { name: "Sidewinder", algo: sidewinder },
   { name: "Aldous-Broder", algo: aldousBroder },
   { name: "Wilson", algo: wilson },
-  { name: "Hunt & Kill", algo: huntAndKill }
+  { name: "Hunt & Kill", algo: huntAndKill },
+  { name: "Recursive Backtracker", algo: recursiveBacktracker }
 ];
 
 const App: React.FC = () => {
@@ -39,7 +41,7 @@ const App: React.FC = () => {
   useEffect(() => generate(), []);
 
   return (
-    <div>
+    <div className="container">
       <FormGroup title="Generators">
         <ButtonGroup>
           {algorithms.map((algorithm, i) => (
