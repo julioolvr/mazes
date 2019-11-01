@@ -59,3 +59,4 @@ function distancesFrom(
 }
 
 export default dijkstra;
+export { distancesFrom };

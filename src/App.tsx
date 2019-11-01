@@ -19,6 +19,7 @@ const App: React.FC = () => {
   const maze = new Grid(20, 20);
   const [algorithmIndex, setAlgorithmIndex] = useState(0);
   const [showSolution, setShowSolution] = useState(true);
+  const [showDistanceGradient, setShowDistanceGradient] = useState(false);
 
   const mazeRef = useRef(maze);
   const [generatedAt, setGeneratedAt] = useState(new Date());
@@ -61,7 +62,10 @@ const App: React.FC = () => {
           y: mazeRef.current.height - 1
         }}
         showSolution={showSolution}
+        showDistanceGradient={showDistanceGradient}
       />
+
+      <h3>Options</h3>
 
       <FormGroup title="Show solution">
         <ButtonGroup>
@@ -73,6 +77,24 @@ const App: React.FC = () => {
           </Button>
 
           <Button onClick={() => setShowSolution(true)} selected={showSolution}>
+            Yes
+          </Button>
+        </ButtonGroup>
+      </FormGroup>
+
+      <FormGroup title="Show distance gradient">
+        <ButtonGroup>
+          <Button
+            onClick={() => setShowDistanceGradient(false)}
+            selected={!showDistanceGradient}
+          >
+            No
+          </Button>
+
+          <Button
+            onClick={() => setShowDistanceGradient(true)}
+            selected={showDistanceGradient}
+          >
             Yes
           </Button>
         </ButtonGroup>
