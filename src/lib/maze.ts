@@ -147,6 +147,18 @@ class Grid {
     return this.width * this.height;
   }
 
+  orderedCells(): Array<Cell> {
+    const cells = [];
+
+    for (let y = this.height - 1; y >= 0; y--) {
+      for (let x = 0; x < this.width; x++) {
+        cells.push(this.cellAt({ x, y }));
+      }
+    }
+
+    return cells;
+  }
+
   allVisited(): boolean {
     return (
       this.cells.filter(cell => cell.isVisited()).length === this.getSize()
@@ -155,6 +167,18 @@ class Grid {
 
   notVisited(): Set<Cell> {
     return new Set(this.cells.filter(cell => !cell.isVisited()));
+  }
+
+  visitedNeighbors(cell: Cell): Set<Cell> {
+    return new Set(
+      Array.from(this.neighbors(cell)).filter(cell => cell.isVisited())
+    );
+  }
+
+  notVisitedNeighbors(cell: Cell): Set<Cell> {
+    return new Set(
+      Array.from(this.neighbors(cell)).filter(cell => !cell.isVisited())
+    );
   }
 }
 
