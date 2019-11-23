@@ -109,7 +109,23 @@ class Grid {
     return this.width * this.height;
   }
 
-  orderedCells(): Array<Cell> {
+  orderedCellsBottomLeftTopRight(): Array<Cell> {
+    const cells = [];
+
+    for (let y = 0; y <= this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        const cell = this.cellAt({ x, y });
+
+        if (cell) {
+          cells.push(cell);
+        }
+      }
+    }
+
+    return cells;
+  }
+
+  orderedCellsTopLeftBottomRight(): Array<Cell> {
     const cells = [];
 
     for (let y = this.height - 1; y >= 0; y--) {

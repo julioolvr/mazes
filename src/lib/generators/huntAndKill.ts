@@ -15,7 +15,7 @@ function huntAndKill(grid: Grid) {
       current = next;
     } else {
       const candidate = grid
-        .orderedCells()
+        .orderedCellsTopLeftBottomRight()
         .find(
           cell => !cell.isVisited() && grid.visitedNeighbors(cell).size > 0
         );
