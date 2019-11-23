@@ -5,7 +5,8 @@ import Maze from "Maze";
 import FormGroup from "ui/FormGroup";
 import ButtonGroup from "ui/ButtonGroup";
 import Button from "ui/Button";
-import Grid from "lib/maze";
+import Grid, { MaskedGrid } from "lib/maze";
+import Mask from "lib/mask";
 import {
   binaryTree,
   sidewinder,
@@ -25,7 +26,21 @@ const algorithms = [
 ];
 
 const App: React.FC = () => {
-  const maze = new Grid(20, 20);
+  const mask = new Mask([
+    [true, true, true, true, true],
+    [true, true, true, true, true],
+    [true, true, true, true, true],
+    [true, true, true, true, true],
+    [true, true, false, false, true],
+    [true, true, false, false, true],
+    [true, true, false, false, true],
+    [true, true, false, false, true],
+    [true, true, true, true, true],
+    [true, true, true, true, true],
+    [true, true, true, true, true],
+    [true, true, true, true, true]
+  ]);
+  const maze = new MaskedGrid(mask);
   const [algorithmIndex, setAlgorithmIndex] = useState(0);
   const [showSolution, setShowSolution] = useState(true);
   const [showDistanceGradient, setShowDistanceGradient] = useState(false);
@@ -65,6 +80,7 @@ const App: React.FC = () => {
       <Maze
         key={generatedAt.toISOString()}
         grid={mazeRef.current}
+        mask={mask}
         startPoint={{ x: 0, y: 0 }}
         endPoint={{
           x: mazeRef.current.width - 1,

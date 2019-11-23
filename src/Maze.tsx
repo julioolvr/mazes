@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 
 import Grid, { GridCoordinates } from "lib/maze";
+import Mask from "lib/mask";
 import times from "utils/times";
 import dijkstra, { distancesFrom } from "lib/solvers/dijkstra";
 
@@ -8,6 +9,7 @@ import "./Maze.css";
 
 function Maze({
   grid,
+  mask,
   startPoint,
   endPoint,
   showSolution = true,
@@ -86,7 +88,11 @@ function Maze({
                     100}%, 50%)`;
                 }
 
-                return <td key={x} style={style}></td>;
+                if (mask && !mask.enabled(x, y)) {
+                  style.backgroundColor = "black";
+                }
+
+                return <td key={x} style={style} />;
               })}
             </tr>
           );
@@ -98,6 +104,7 @@ function Maze({
 
 type Props = {
   grid: Grid;
+  mask?: Mask;
   startPoint: GridCoordinates;
   endPoint: GridCoordinates;
   showSolution?: boolean;
