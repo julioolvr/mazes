@@ -1,7 +1,5 @@
 import identity from "utils/identity";
 
-type BooleanMatrix = Array<Array<boolean>>;
-
 class Mask {
   mask: BooleanMatrix;
 
@@ -30,3 +28,5 @@ class Mask {
 }
 
 export default Mask;
+
+export type BooleanMatrix = Array<Array<boolean>>;

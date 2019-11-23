@@ -7,6 +7,7 @@ import ButtonGroup from "ui/ButtonGroup";
 import Button from "ui/Button";
 import Grid, { MaskedGrid } from "lib/maze";
 import Mask from "lib/mask";
+import { spaceInvader } from "lib/masks";
 import {
   binaryTree,
   sidewinder,
@@ -26,20 +27,7 @@ const algorithms = [
 ];
 
 const App: React.FC = () => {
-  const mask = new Mask([
-    [true, true, true, true, true],
-    [true, true, true, true, true],
-    [true, true, true, true, true],
-    [true, true, true, true, true],
-    [true, true, false, false, true],
-    [true, true, false, false, true],
-    [true, true, false, false, true],
-    [true, true, false, false, true],
-    [true, true, true, true, true],
-    [true, true, true, true, true],
-    [true, true, true, true, true],
-    [true, true, true, true, true]
-  ]);
+  const mask = new Mask(spaceInvader);
   const maze = new MaskedGrid(mask);
   const [algorithmIndex, setAlgorithmIndex] = useState(0);
   const [showSolution, setShowSolution] = useState(true);
