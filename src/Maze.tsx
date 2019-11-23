@@ -25,7 +25,9 @@ function Maze({
         : [],
     [grid, showDistanceGradient]
   );
-  const maxDistance = Math.max(...distances.flat());
+  const maxDistance = Math.max(
+    ...distances.flat().filter(distance => distance !== undefined)
+  );
 
   const solution = useMemo(
     () => (showSolution ? dijkstra(grid, startPoint, endPoint) : []),
