@@ -41,10 +41,15 @@ const App: React.FC = () => {
   const mazeRef = useRef(maze);
   const [generatedAt, setGeneratedAt] = useState(new Date());
 
-  const generate = (algorithmIndex: number) => {
+  const generate = (algorithmIndex: number, useMask: boolean) => {
+    if (mazeRef.current instanceof MaskedGrid !== useMask) {
+      mazeRef.current = useMask ? new MaskedGrid(mask) : new Grid(20, 20);
+    }
     algorithms[algorithmIndex].algo(mazeRef.current);
     setGeneratedAt(new Date());
   };
+
+  useEffect(() => generate(algorithmIndex, useMask), []);
 
   const [startPoint, endPoint] = useMemo(() => {
     const cells = mazeRef.current.orderedCellsBottomLeftTopRight();
@@ -52,15 +57,9 @@ const App: React.FC = () => {
   }, [mazeRef.current]);
 
   useEffect(() => {
-    mazeRef.current = useMask ? new MaskedGrid(mask) : new Grid(20, 20);
-    generate(algorithmIndex);
-  }, [useMask]);
-
-  useEffect(() => {
     if (useMask && !algorithms[algorithmIndex].supportsMask) {
       const index = algorithms.findIndex(algorithm => algorithm.supportsMask);
       setAlgorithmIndex(index);
-      generate(index);
     }
   }, [useMask, algorithmIndex]);
 
@@ -86,8 +85,20 @@ const App: React.FC = () => {
         </ButtonGroup>
       </FormGroup>
 
+      <FormGroup title="Use mask">
+        <ButtonGroup>
+          <Button onClick={() => setUseMask(false)} selected={!useMask}>
+            No
+          </Button>
+
+          <Button onClick={() => setUseMask(true)} selected={useMask}>
+            Yes
+          </Button>
+        </ButtonGroup>
+      </FormGroup>
+
       <div>
-        <Button fullWidth onClick={() => generate(algorithmIndex)}>
+        <Button fullWidth onClick={() => generate(algorithmIndex, useMask)}>
           Generate
         </Button>
       </div>
@@ -131,18 +142,6 @@ const App: React.FC = () => {
             onClick={() => setShowDistanceGradient(true)}
             selected={showDistanceGradient}
           >
-            Yes
-          </Button>
-        </ButtonGroup>
-      </FormGroup>
-
-      <FormGroup title="Use mask">
-        <ButtonGroup>
-          <Button onClick={() => setUseMask(false)} selected={!useMask}>
-            No
-          </Button>
-
-          <Button onClick={() => setUseMask(true)} selected={useMask}>
             Yes
           </Button>
         </ButtonGroup>
