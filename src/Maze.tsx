@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 
-import Grid, { GridCoordinates } from "lib/maze";
-import Mask from "lib/mask";
+import Grid, { GridCoordinates, MaskedGrid } from "lib/maze";
 import times from "utils/times";
 import dijkstra, { distancesFrom } from "lib/solvers/dijkstra";
 
@@ -9,7 +8,6 @@ import "./Maze.css";
 
 function Maze({
   grid,
-  mask,
   startPoint,
   endPoint,
   showSolution = true,
@@ -25,6 +23,7 @@ function Maze({
         : [],
     [grid, showDistanceGradient]
   );
+
   const maxDistance = Math.max(
     ...distances.flat().filter(distance => distance !== undefined)
   );
@@ -33,6 +32,8 @@ function Maze({
     () => (showSolution ? dijkstra(grid, startPoint, endPoint) : []),
     [grid, startPoint, endPoint, showSolution]
   );
+
+  const mask = grid instanceof MaskedGrid && grid.mask;
 
   return (
     <table>
@@ -106,7 +107,6 @@ function Maze({
 
 type Props = {
   grid: Grid;
-  mask?: Mask;
   startPoint: GridCoordinates;
   endPoint: GridCoordinates;
   showSolution?: boolean;

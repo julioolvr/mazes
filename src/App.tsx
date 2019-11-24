@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import "./App.css";
 
 import Maze from "Maze";
@@ -31,33 +31,38 @@ const algorithms = [
 ];
 
 const App: React.FC = () => {
-  const mask = new Mask(spaceInvader);
-  const maze = new MaskedGrid(mask);
   const [algorithmIndex, setAlgorithmIndex] = useState(0);
   const [showSolution, setShowSolution] = useState(true);
   const [showDistanceGradient, setShowDistanceGradient] = useState(false);
+  const [useMask, setUseMask] = useState(false);
+  const mask = new Mask(spaceInvader);
 
+  const maze = useMask ? new MaskedGrid(mask) : new Grid(20, 20);
   const mazeRef = useRef(maze);
   const [generatedAt, setGeneratedAt] = useState(new Date());
-
-  const cells = maze.orderedCellsBottomLeftTopRight();
-  const startPoint = cells[0].coordinates;
-  const endPoint = cells[cells.length - 1].coordinates;
 
   const generate = (algorithmIndex: number) => {
     algorithms[algorithmIndex].algo(mazeRef.current);
     setGeneratedAt(new Date());
   };
 
-  useEffect(() => generate(algorithmIndex), []);
+  const [startPoint, endPoint] = useMemo(() => {
+    const cells = mazeRef.current.orderedCellsBottomLeftTopRight();
+    return [cells[0].coordinates, cells[cells.length - 1].coordinates];
+  }, [mazeRef.current]);
 
   useEffect(() => {
-    if (mask && !algorithms[algorithmIndex].supportsMask) {
+    mazeRef.current = useMask ? new MaskedGrid(mask) : new Grid(20, 20);
+    generate(algorithmIndex);
+  }, [useMask]);
+
+  useEffect(() => {
+    if (useMask && !algorithms[algorithmIndex].supportsMask) {
       const index = algorithms.findIndex(algorithm => algorithm.supportsMask);
       setAlgorithmIndex(index);
       generate(index);
     }
-  }, [mask, algorithmIndex]);
+  }, [useMask, algorithmIndex]);
 
   return (
     <div className="container">
@@ -68,9 +73,9 @@ const App: React.FC = () => {
               key={algorithm.name}
               onClick={() => setAlgorithmIndex(i)}
               selected={algorithmIndex === i}
-              disabled={mask && !algorithm.supportsMask}
+              disabled={useMask && !algorithm.supportsMask}
               title={
-                mask && !algorithm.supportsMask
+                useMask && !algorithm.supportsMask
                   ? "This algorithm doesn't support masking"
                   : undefined
               }
@@ -90,7 +95,6 @@ const App: React.FC = () => {
       <Maze
         key={generatedAt.toISOString()}
         grid={mazeRef.current}
-        mask={mask}
         startPoint={startPoint}
         endPoint={endPoint}
         showSolution={showSolution}
@@ -127,6 +131,18 @@ const App: React.FC = () => {
             onClick={() => setShowDistanceGradient(true)}
             selected={showDistanceGradient}
           >
+            Yes
+          </Button>
+        </ButtonGroup>
+      </FormGroup>
+
+      <FormGroup title="Use mask">
+        <ButtonGroup>
+          <Button onClick={() => setUseMask(false)} selected={!useMask}>
+            No
+          </Button>
+
+          <Button onClick={() => setUseMask(true)} selected={useMask}>
             Yes
           </Button>
         </ButtonGroup>
