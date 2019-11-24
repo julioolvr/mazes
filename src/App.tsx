@@ -18,12 +18,16 @@ import {
 } from "lib/generators";
 
 const algorithms = [
-  { name: "Binary Tree", algo: binaryTree },
-  { name: "Sidewinder", algo: sidewinder },
-  { name: "Aldous-Broder", algo: aldousBroder },
-  { name: "Wilson", algo: wilson },
-  { name: "Hunt & Kill", algo: huntAndKill },
-  { name: "Recursive Backtracker", algo: recursiveBacktracker }
+  { name: "Binary Tree", algo: binaryTree, supportsMask: false },
+  { name: "Sidewinder", algo: sidewinder, supportsMask: false },
+  { name: "Aldous-Broder", algo: aldousBroder, supportsMask: true },
+  { name: "Wilson", algo: wilson, supportsMask: true },
+  { name: "Hunt & Kill", algo: huntAndKill, supportsMask: true },
+  {
+    name: "Recursive Backtracker",
+    algo: recursiveBacktracker,
+    supportsMask: true
+  }
 ];
 
 const App: React.FC = () => {
@@ -40,12 +44,20 @@ const App: React.FC = () => {
   const startPoint = cells[0].coordinates;
   const endPoint = cells[cells.length - 1].coordinates;
 
-  const generate = useCallback(() => {
+  const generate = (algorithmIndex: number) => {
     algorithms[algorithmIndex].algo(mazeRef.current);
     setGeneratedAt(new Date());
-  }, [algorithmIndex]);
+  };
 
-  useEffect(() => generate(), []);
+  useEffect(() => generate(algorithmIndex), []);
+
+  useEffect(() => {
+    if (mask && !algorithms[algorithmIndex].supportsMask) {
+      const index = algorithms.findIndex(algorithm => algorithm.supportsMask);
+      setAlgorithmIndex(index);
+      generate(index);
+    }
+  }, [mask, algorithmIndex]);
 
   return (
     <div className="container">
@@ -56,6 +68,12 @@ const App: React.FC = () => {
               key={algorithm.name}
               onClick={() => setAlgorithmIndex(i)}
               selected={algorithmIndex === i}
+              disabled={mask && !algorithm.supportsMask}
+              title={
+                mask && !algorithm.supportsMask
+                  ? "This algorithm doesn't support masking"
+                  : undefined
+              }
             >
               {algorithm.name}
             </Button>
@@ -64,7 +82,7 @@ const App: React.FC = () => {
       </FormGroup>
 
       <div>
-        <Button fullWidth onClick={generate}>
+        <Button fullWidth onClick={() => generate(algorithmIndex)}>
           Generate
         </Button>
       </div>
